@@ -142,9 +142,9 @@ public class MainFragment extends PreferenceFragment implements OnSharedPreferen
             startTrackingService(true, false);
         }
 
-        if (sharedPreferences.getBoolean(KEY_CAMERA_STATUS, false)) {
-            openVideoBroadcaster();
-        }
+//        if (sharedPreferences.getBoolean(KEY_CAMERA_STATUS, false)) {
+//            openVideoBroadcaster();
+//        }
     }
 
     private void permissionCheck() {
@@ -213,13 +213,14 @@ public class MainFragment extends PreferenceFragment implements OnSharedPreferen
             }
         } else if (key.equals(KEY_DEVICE)) {
             findPreference(KEY_DEVICE).setSummary(sharedPreferences.getString(KEY_DEVICE, null));
-        } else    if (key.equals(KEY_CAMERA_STATUS)) {
-            if (sharedPreferences.getBoolean(KEY_CAMERA_STATUS, false)) {
-                openVideoBroadcaster();
-            } else {
-//                stopTrackingService();
-            }
         }
+//        else    if (key.equals(KEY_CAMERA_STATUS)) {
+//            if (sharedPreferences.getBoolean(KEY_CAMERA_STATUS, false)) {
+//                openVideoBroadcaster();
+//            } else {
+////                stopTrackingService();
+//            }
+//        }
     }
 
     @Override
