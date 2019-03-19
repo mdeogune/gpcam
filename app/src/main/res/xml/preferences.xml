@@ -10,6 +10,15 @@
         android:switchTextOn="@string/settings_status_on"
         android:title="@string/settings_status_title" />
 
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="camera"
+        android:summaryOff="@string/settings_camera_off_summary"
+        android:summaryOn="@string/settings_camera_on_summary"
+        android:switchTextOff="@string/settings_camera_off"
+        android:switchTextOn="@string/settings_camera_on"
+        android:title="@string/settings_camera_title" />
+
     <EditTextPreference
         android:key="id"
         android:title="@string/settings_id_title" />

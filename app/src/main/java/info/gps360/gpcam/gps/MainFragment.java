@@ -33,16 +33,20 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.TwoStatePreference;
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AlertDialog;
 import info.gps360.gpcam.BuildConfig;
 import info.gps360.gpcam.R;
+import info.gps360.gpcam.camera_streaming.LiveVideoBroadcasterActivity;
 
 
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.webkit.URLUtil;
 import android.widget.Toast;
 
@@ -64,6 +68,7 @@ public class MainFragment extends PreferenceFragment implements OnSharedPreferen
     public static final String KEY_ANGLE = "angle";
     public static final String KEY_ACCURACY = "accuracy";
     public static final String KEY_STATUS = "status";
+    public static final String KEY_CAMERA_STATUS = "camera";
 
     private static final int PERMISSIONS_REQUEST_LOCATION = 2;
 
@@ -84,7 +89,7 @@ public class MainFragment extends PreferenceFragment implements OnSharedPreferen
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         addPreferencesFromResource(R.xml.preferences);
         initPreferences();
-
+        permissionCheck();
         findPreference(KEY_DEVICE).setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -136,6 +141,22 @@ public class MainFragment extends PreferenceFragment implements OnSharedPreferen
         if (sharedPreferences.getBoolean(KEY_STATUS, false)) {
             startTrackingService(true, false);
         }
+
+        if (sharedPreferences.getBoolean(KEY_CAMERA_STATUS, false)) {
+            openVideoBroadcaster();
+        }
+    }
+
+    private void permissionCheck() {
+
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+
+        } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(new String[]{Manifest.permission.CAMERA}, PERMISSIONS_REQUEST_LOCATION);
+            }
+
+        }
     }
 
     private void removeLauncherIcon() {
@@ -166,6 +187,13 @@ public class MainFragment extends PreferenceFragment implements OnSharedPreferen
         sharedPreferences.unregisterOnSharedPreferenceChangeListener(this);
     }
 
+
+    public void openVideoBroadcaster() {
+        Log.e(TAG,"video broadcasting");
+        Intent i = new Intent(getActivity(), LiveVideoBroadcasterActivity.class);
+        startActivity(i);
+    }
+
     private void setPreferencesEnabled(boolean enabled) {
         findPreference(KEY_DEVICE).setEnabled(enabled);
         findPreference(KEY_URL).setEnabled(enabled);
@@ -185,6 +213,12 @@ public class MainFragment extends PreferenceFragment implements OnSharedPreferen
             }
         } else if (key.equals(KEY_DEVICE)) {
             findPreference(KEY_DEVICE).setSummary(sharedPreferences.getString(KEY_DEVICE, null));
+        } else    if (key.equals(KEY_CAMERA_STATUS)) {
+            if (sharedPreferences.getBoolean(KEY_CAMERA_STATUS, false)) {
+                openVideoBroadcaster();
+            } else {
+//                stopTrackingService();
+            }
         }
     }
 
@@ -220,24 +254,24 @@ public class MainFragment extends PreferenceFragment implements OnSharedPreferen
 
     private String findIMEI() {
         if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED) {
-            permission = true;
+
         } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE}, PERMISSIONS_REQUEST_LOCATION);
             }
-            return;
+
         }
 
-        TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+        TelephonyManager telephonyManager = (TelephonyManager) getActivity().getSystemService(Context.TELEPHONY_SERVICE);
         String imei = null;
         if (telephonyManager != null)
-            if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-                return;
+            if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+
             }
 
         imei = telephonyManager.getDeviceId();
 
-        return imei
+        return imei;
 
 
     }

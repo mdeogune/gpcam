@@ -20,6 +20,11 @@
   <string name="settings_status_on">Stop</string>
   <string name="settings_status_off_summary">Service stopped</string>
   <string name="settings_status_on_summary">Service running</string>
+  <string name="settings_camera_off">Start</string>
+  <string name="settings_camera_on">Stop</string>
+  <string name="settings_camera_off_summary">Camera stopped</string>
+  <string name="settings_camera_on_summary">Camera running</string>
+  <string name="settings_camera_title">Camera status</string>
   <string name="settings_accuracy_title">Location accuracy</string>
   <string name="settings_accuracy_summary">Desired location accuracy</string>
   <string name="settings_accuracy_high">High</string>
@@ -44,4 +49,36 @@
   <string name="hidden_app_name">Device Settings</string>
   <string name="hidden_alert">The app has been hidden. To open it again please dial 8722227 (TRACCAR).</string>
   <string name="error_msg_invalid_url">Please enter a valid http:// or https:// URL</string>
+
+
+
+  <string name="live_indicator">on-air</string>
+  <string name="start_broadcasting">Start Broadcasting</string>
+  <string name="stream_name">Stream Name</string>
+  <string name="nocamera">No camera exists in your device</string>
+  <string name="camera_not_running_properly">Camera is not running properly</string>
+  <string name="restart">Restart</string>
+  <string name="streaming_not_finished">Your previous broadcast still sends packets due to slow internet speed</string>
+  <string name="oopps_shouldnt_happen">Oopps this shouldn\'t be happened. Please let the library developer this status</string>
+  <string name="broadcast_connection_lost">Connection to media server is lost</string>
+  <string name="low_bandwidth">Network speed is low. Latency is increasing.</string>
+  <string name="not_eligible_for_broadcast">Your device is not eligible to broadcast. There is no hardware encoder.</string>
+  <string name="no_network_connectivity">You\'re not connected to any network. Please connect to Internet</string>
+  <string name="stop_broadcasting">Stop</string>
+  <string name="camera_permission_is_required">Camera permission is required to run this app</string>
+  <string name="microphone_permission_is_required">Microphone permission is required to run this app</string>
+  <string name="permission">Permission</string>
+  <string name="app_doesnot_work_without_permissions">App does not work without permissions. Please give Camera and Record Audio permission on app settings</string>
+
+
+
+
+  <string name="error_unsupported_video">Media includes video tracks, but none are playable by this device</string>
+
+  <string name="error_unsupported_audio">Media includes audio tracks, but none are playable by this device</string>
+
+  <string name="storage_permission_denied">Permission to access storage was denied</string>
+
+  <string name="sample_list_load_error">One or more sample lists failed to load</string>
+  <string name="stream_not_started">Failed to start. Please check server url and security credentials.</string>
 </resources>
