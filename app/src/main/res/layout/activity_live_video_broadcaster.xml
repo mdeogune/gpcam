@@ -99,9 +99,9 @@
             style="@style/Base.Widget.AppCompat.Button.Colored"
             android:textColor="@android:color/white"
             android:text="@string/start_broadcasting"
+            android:onClick="toggleBroadcasting"
             android:layout_gravity="center_horizontal"
             android:textAppearance="?android:textAppearanceMedium"
-            android:onClick="toggleBroadcasting"
-            tools:ignore="OnClick" />
+            />
     </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>

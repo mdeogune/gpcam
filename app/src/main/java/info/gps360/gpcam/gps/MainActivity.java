@@ -15,18 +15,38 @@
  */
 package info.gps360.gpcam.gps;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import info.gps360.gpcam.R;
+import info.gps360.gpcam.camera_streaming.LiveVideoBroadcasterActivity;
 
 public class MainActivity extends AppCompatActivity {
 
+//    @Override
+//    protected void onCreate(@Nullable Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        if (savedInstanceState == null) {
+//            getFragmentManager().beginTransaction().replace(android.R.id.content, new MainFragment()).commit();
+//        }
+//
+//
+//    }
+
+    public static final String RTMP_BASE_URL = "rtmp://10.10.31.87/LiveApp/";
+
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (savedInstanceState == null) {
-            getFragmentManager().beginTransaction().replace(android.R.id.content, new MainFragment()).commit();
-        }
+        setContentView(R.layout.activity_main);
+    }
+
+    public void openVideoBroadcaster(View view) {
+        Intent i = new Intent(this, LiveVideoBroadcasterActivity.class);
+        startActivity(i);
     }
 
 }
