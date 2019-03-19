@@ -15,9 +15,16 @@
  */
 package info.gps360.gpcam.gps;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.PowerManager;
+import android.util.Log;
 import android.view.View;
+
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,6 +36,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        IntentFilter intentfilter = new IntentFilter();
+        intentfilter.addAction("startLive");
+        getApplicationContext().registerReceiver(cameraReceiver, intentfilter);
+
         if (savedInstanceState == null) {
             getFragmentManager().beginTransaction().replace(android.R.id.content, new MainFragment()).commit();
         }
@@ -36,6 +48,16 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+    private BroadcastReceiver cameraReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if(intent.getAction() == "startLive"){
+                Intent i =new Intent(context,LiveVideoBroadcasterActivity.class);
+                startActivity(i);
+            }
+        }
+    };
 
 
 }

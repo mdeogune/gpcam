@@ -52,7 +52,7 @@ import android.webkit.URLUtil;
 import android.widget.Toast;
 
 
-
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.Random;
 
@@ -86,6 +86,9 @@ public class MainFragment extends PreferenceFragment implements OnSharedPreferen
         }
 
         setHasOptionsMenu(true);
+
+        Log.e("fcm", FirebaseInstanceId.getInstance().getToken());
+
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         addPreferencesFromResource(R.xml.preferences);

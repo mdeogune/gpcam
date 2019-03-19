@@ -82,6 +82,26 @@
             />
         <service android:name="io.antmedia.android.broadcaster.LiveVideoBroadcaster" > </service>
 
+
+
+        <service android:name=".cloud_messaging.MyFirebaseMessagingService"
+            android:permission="com.google.android.c2dm.permission.SEND"
+            >
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+
+            </intent-filter>
+        </service>
+
+        <service android:name=".cloud_messaging.MyFirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+
+        <service android:name=".cloud_messaging.FcmTokenRegistrationService"/>
+
     </application>
 
 </manifest>
