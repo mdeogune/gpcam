@@ -33,6 +33,7 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.TwoStatePreference;
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AlertDialog;
@@ -188,6 +189,7 @@ public class MainFragment extends PreferenceFragment implements OnSharedPreferen
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     public void openVideoBroadcaster() {
         Log.e(TAG,"video broadcasting");
         Intent i = new Intent(getActivity(), LiveVideoBroadcasterActivity.class);
@@ -213,6 +215,15 @@ public class MainFragment extends PreferenceFragment implements OnSharedPreferen
             }
         } else if (key.equals(KEY_DEVICE)) {
             findPreference(KEY_DEVICE).setSummary(sharedPreferences.getString(KEY_DEVICE, null));
+
+        }
+        else    if (key.equals(KEY_CAMERA_STATUS)) {
+            if (sharedPreferences.getBoolean(KEY_CAMERA_STATUS, false)) {
+
+                openVideoBroadcaster();
+            } else {
+//                stopTrackingService();
+            }
         }
 //        else    if (key.equals(KEY_CAMERA_STATUS)) {
 //            if (sharedPreferences.getBoolean(KEY_CAMERA_STATUS, false)) {

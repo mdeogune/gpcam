@@ -15,9 +15,14 @@
  */
 package info.gps360.gpcam.gps;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import info.gps360.gpcam.R;
+import info.gps360.gpcam.camera_streaming.LiveVideoBroadcasterActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,6 +32,10 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             getFragmentManager().beginTransaction().replace(android.R.id.content, new MainFragment()).commit();
         }
+
+
     }
+
+
 
 }
