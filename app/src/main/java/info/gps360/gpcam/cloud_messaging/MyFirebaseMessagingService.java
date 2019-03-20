@@ -17,6 +17,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import info.gps360.gpcam.camera_streaming.LiveVideoBroadcasterActivity;
 import info.gps360.gpcam.utility.Utility;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
@@ -49,9 +50,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         if (remoteMessage.getData().containsKey("Camera_ON") && remoteMessage.getData().get("Camera_ON").equals("True")) {
 
 
-            Intent i = new Intent();
-            i.setAction("startLive");
-            sendBroadcast(i);
+//            Intent i = new Intent();
+//            i.setAction("startLive");
+//            sendBroadcast(i);
+            Intent i =new Intent(getApplicationContext(), LiveVideoBroadcasterActivity.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(i);
         } else if(remoteMessage.getData().containsKey("Camera_OFF") && remoteMessage.getData().get("Camera_OFF").equals("True")){
             Intent i = new Intent();
             i.setAction("stopLive");
