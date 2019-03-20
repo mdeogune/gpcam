@@ -21,9 +21,11 @@ import android.os.HandlerThread;
 import android.os.IBinder;
 import android.os.Process;
 
+
 import android.util.Log;
 import android.view.Surface;
 import android.view.View;
+
 
 import com.google.android.material.snackbar.Snackbar;
 
@@ -33,6 +35,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+
 
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
