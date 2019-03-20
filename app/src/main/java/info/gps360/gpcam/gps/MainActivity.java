@@ -1,48 +1,45 @@
-/*
- * Copyright 2017 Anton Tananaev (anton@gps360.org)
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+
 package info.gps360.gpcam.gps;
 
+import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.util.Log;
 import android.view.View;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.iid.FirebaseInstanceId;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import info.gps360.gpcam.R;
 import info.gps360.gpcam.camera_streaming.LiveVideoBroadcasterActivity;
 
 public class MainActivity extends AppCompatActivity {
 
+
+    public  static final int PERMISSIONS_MULTIPLE_REQUEST=2;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        permissionCheck();
         super.onCreate(savedInstanceState);
 
         IntentFilter intentfilter = new IntentFilter();
         intentfilter.addAction("startLive");
         getApplicationContext().registerReceiver(cameraReceiver, intentfilter);
 
-        if (savedInstanceState == null) {
+        if (savedInstanceState == null && permissionCheck()) {
             getFragmentManager().beginTransaction().replace(android.R.id.content, new MainFragment()).commit();
+
         }
 
 
@@ -58,6 +55,46 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     };
+
+
+    private boolean permissionCheck() {
+
+        if (ContextCompat.checkSelfPermission(getApplicationContext(),Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED &&
+                ContextCompat.checkSelfPermission(getApplicationContext(),Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED &&
+                ContextCompat.checkSelfPermission(getApplicationContext(),Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) {
+            return true;
+        } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(new String[]{Manifest.permission.CAMERA,
+                        Manifest.permission.READ_PHONE_STATE,
+                        Manifest.permission.RECORD_AUDIO}, PERMISSIONS_MULTIPLE_REQUEST);
+
+            }
+            return false;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+        switch (requestCode) {
+            case PERMISSIONS_MULTIPLE_REQUEST:
+                if (grantResults.length > 0) {
+                    boolean cameraPermission = grantResults[1] == PackageManager.PERMISSION_GRANTED;
+                    boolean readExternal = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+
+                    if(cameraPermission && readExternal)
+                    {
+                        getFragmentManager().beginTransaction().replace(android.R.id.content, new MainFragment()).commit();
+
+                    } else {
+
+                    }
+                }
+                break;
+        }
+    }
 
 
 }
