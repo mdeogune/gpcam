@@ -17,6 +17,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import info.gps360.gpcam.camera_recording.VideoUploadResponse;
 import info.gps360.gpcam.camera_streaming.LiveVideoBroadcasterActivity;
 import info.gps360.gpcam.utility.Utility;
 
@@ -135,7 +136,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 Log.e("PATHOF",PATH + File.separator + videoDate +" "+String.valueOf(i)+".zip");
 
             }
-//            new VideoUploadResponse(getApplicationContext(),send_list).execute();
+            new VideoUploadResponse(getApplicationContext(),send_list).execute();
 
 
         }

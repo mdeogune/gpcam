@@ -58,7 +58,7 @@ public class CameraService extends HiddenCameraService {
         }else {
              path= String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS) + File.separator + file);
         }
-        Log.e(TAG, path);
+        Log.d(TAG, path);
         File mFile = new File(path);
         if (!mFile.exists()) {
             mFile.mkdirs();
@@ -78,18 +78,19 @@ public class CameraService extends HiddenCameraService {
         String path = String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS) + File.separator + folder);
 
         File videoPathFile = new File(path);
-        File folders[] = videoPathFile.listFiles();
-        if(folders.length>7){
-            Arrays.sort(folders, new Comparator<File>(){
-                public int compare(File f1, File f2) {
-                    return Long.compare(f1.lastModified(),(f2.lastModified()));
-                }
-            });
+
+
             while (videoPathFile.listFiles().length>7){
                 videoPathFile = new File(path);
                 Log.e("PATHFIKESI",String.valueOf(videoPathFile.listFiles().length));
-                File folder_[] = videoPathFile.listFiles();
-                File fx[] =  folder_[0].listFiles();
+                File folders[] = videoPathFile.listFiles();
+                if(folders.length>7){
+                    Arrays.sort(folders, new Comparator<File>(){
+                        public int compare(File f1, File f2) {
+                            return Long.compare(f1.lastModified(),(f2.lastModified()));
+                        }
+                    });
+                File fx[] =  folders[0].listFiles();
                 for(File x : fx){
                     if(x.isDirectory()){
                         File y[] = x.listFiles();
@@ -99,8 +100,8 @@ public class CameraService extends HiddenCameraService {
                     }
                     x.delete();
                 }
-                Log.e("fff",folder_[0].getName());
-                folder_[0].delete();
+                Log.e("fff",folders[0].getName());
+                folders[0].delete();
             }
             Log.e("PATHFIKESI",String.valueOf(videoPathFile.listFiles().length));
 
@@ -168,20 +169,27 @@ public class CameraService extends HiddenCameraService {
         Log.e(TAG,"Capturing Image");
         checkFile(Constants.IMAGE_FILE,false);
         checkFile(Constants.VIDEO_FILE,false);
-        deleteExtraFolders(Constants.IMAGE_FILE);
-        deleteExtraFolders(Constants.VIDEO_FILE);
+        Calendar c = Calendar.getInstance();
+        String PATH = String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS) + File.separator + Constants.IMAGE_FILE+ File.separator + dateProvider());
 
             try {
 
-                if(!checkFile(Constants.IMAGE_FILE,true)){
-//                    startService(new Intent(getApplicationContext(),ImagesToVideo.class));
+                deleteExtraFolders(Constants.IMAGE_FILE);
+                deleteExtraFolders(Constants.VIDEO_FILE);
+
+                checkFile(Constants.IMAGE_FILE,true);
+                SimpleDateFormat df2 = new SimpleDateFormat("dd/MM/yyyy kk");
+                String date2 = df2.format(c.getTime()).replaceAll("/", "-");
+                String PATH2 = String.valueOf(PATH + File.separator + date2);
+                File file2 = new File(PATH2);
+                if(!file2.exists()){
+                    boolean x = file2.mkdirs();
+                    startService(new Intent(getApplicationContext(),ImagesToVideo.class));
                 }
 
-                String images = String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS) + File.separator + "IMAGES" + File.separator + dateProvider());
-                String image_sub = String.valueOf(images + File.separator + dateProvider());
-                Calendar c = Calendar.getInstance();
+
                 String time = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss").format(c.getTime()).replaceAll("/", "-").replaceAll(":", "-");
-                image_file = new File(image_sub, File.separator + time + ".jpeg");
+                image_file = new File(PATH2, File.separator + time + ".jpeg");
 
                 Bitmap mutableBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
 
@@ -195,8 +203,7 @@ public class CameraService extends HiddenCameraService {
 
                 if (!image_file.exists()) {
                     boolean y = image_file.createNewFile();
-                    Log.e("file", String.valueOf(y));
-                }
+               }
                 OutputStream os = new BufferedOutputStream(new FileOutputStream(image_file));
                 mutableBitmap=(getResizedBitmap(mutableBitmap, width, height));
                 mutableBitmap.compress(Bitmap.CompressFormat.JPEG, 80, os);
@@ -248,11 +255,7 @@ public class CameraService extends HiddenCameraService {
     };
 
     private synchronized void syncData() {
-        File folder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)+
-                File.separator + "VIDEOS");
-        if (!folder.exists()) {
-            folder.mkdirs();
-        }
+
         takePicture();
     }
 

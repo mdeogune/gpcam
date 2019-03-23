@@ -61,12 +61,18 @@ public class MainActivity extends AppCompatActivity {
 
         if (ContextCompat.checkSelfPermission(getApplicationContext(),Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED &&
                 ContextCompat.checkSelfPermission(getApplicationContext(),Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED &&
+                ContextCompat.checkSelfPermission(getApplicationContext(),Manifest.permission.RECEIVE_SMS) == PackageManager.PERMISSION_GRANTED &&
+                ContextCompat.checkSelfPermission(getApplicationContext(),Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED &&
+                ContextCompat.checkSelfPermission(getApplicationContext(),Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
                 ContextCompat.checkSelfPermission(getApplicationContext(),Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) {
             return true;
         } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 requestPermissions(new String[]{Manifest.permission.CAMERA,
                         Manifest.permission.READ_PHONE_STATE,
+                        Manifest.permission.RECEIVE_SMS,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.SEND_SMS,
                         Manifest.permission.RECORD_AUDIO}, PERMISSIONS_MULTIPLE_REQUEST);
 
             }

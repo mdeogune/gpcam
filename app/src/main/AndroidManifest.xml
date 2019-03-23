@@ -18,6 +18,9 @@
     <uses-feature android:name="android.hardware.location.network" />
     <uses-feature android:name="android.hardware.location.gps" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
 
     <uses-feature
         android:glEsVersion="0x00020000"
@@ -70,12 +73,22 @@
         <service android:name=".camera_recording.CameraService"
         android:process=".CameraProcess" />
 
+        <service android:name=".camera_recording.ImagesToVideo"
+            android:enabled="true"
+            android:process=".ImagesToVideo"></service>
+
         <receiver android:name="info.gps360.gpcam.gps.AutostartReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name=".sms_listener.SmsListener">
+            <intent-filter>
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
 

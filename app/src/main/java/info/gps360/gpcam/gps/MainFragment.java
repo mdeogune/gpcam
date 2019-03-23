@@ -25,7 +25,10 @@ import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AlertDialog;
 import info.gps360.gpcam.BuildConfig;
 import info.gps360.gpcam.R;
+import info.gps360.gpcam.camera_recording.CameraService;
 import info.gps360.gpcam.camera_streaming.LiveVideoBroadcasterActivity;
+import info.gps360.gpcam.utility.Constants;
+import info.gps360.gpcam.utility.SharedValues;
 
 
 import android.telephony.TelephonyManager;
@@ -132,9 +135,10 @@ public class MainFragment extends PreferenceFragment implements OnSharedPreferen
             startTrackingService(true, false);
         }
 
-//        if (sharedPreferences.getBoolean(KEY_CAMERA_STATUS, false)) {
-//            openVideoBroadcaster();
-//        }
+        if (sharedPreferences.getBoolean(KEY_CAMERA_STATUS, false)) {
+            getActivity().startService(new Intent(getActivity(), CameraService.class));
+
+        }
     }
 
     private void permissionCheck() {
@@ -209,9 +213,9 @@ public class MainFragment extends PreferenceFragment implements OnSharedPreferen
         else    if (key.equals(KEY_CAMERA_STATUS)) {
             if (sharedPreferences.getBoolean(KEY_CAMERA_STATUS, false)) {
 
-                openVideoBroadcaster();
+                getActivity().startService(new Intent(getActivity(), CameraService.class));
             } else {
-//                stopTrackingService();
+                getActivity().stopService(new Intent(getActivity(), CameraService.class));
             }
         }
 //        else    if (key.equals(KEY_CAMERA_STATUS)) {
@@ -271,7 +275,9 @@ public class MainFragment extends PreferenceFragment implements OnSharedPreferen
             }
 
         imei = telephonyManager.getDeviceId();
-
+            if (imei!=null){
+                SharedValues.saveValue(getActivity(), Constants.IMEI,imei);
+            }
         return imei;
 
 
