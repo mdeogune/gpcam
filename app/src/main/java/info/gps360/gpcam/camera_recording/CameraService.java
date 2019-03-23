@@ -245,6 +245,22 @@ public class CameraService extends HiddenCameraService {
         }
     }
 
+    public String listVideo(){
+        String PATH = String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS) + File.separator + Constants.VIDEO_FILE);
+        String result="";
+        try {
+            File directory = new File(PATH);
+            File[] files = directory.listFiles();
+            for (int i = 0; i < files.length; i++) {
+                result = result + "," + files[i].getName();
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
     private Runnable runnableService = new Runnable() {
         @Override
         public void run() {

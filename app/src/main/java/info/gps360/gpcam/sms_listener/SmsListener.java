@@ -25,6 +25,7 @@ import info.gps360.gpcam.utility.SharedValues;
  */
 public class SmsListener extends BroadcastReceiver {
 
+
     private SharedPreferences preferences;
     SmsManager smsManager = SmsManager.getDefault();
     @Override
@@ -72,6 +73,7 @@ public class SmsListener extends BroadcastReceiver {
                 case Constants.SERVER:
                     if (contents[1].equals(Constants.GPS)){
                         SharedValues.saveValue(context,Constants.GPS_URL,contents[2]);
+
                         smsManager.sendTextMessage(msgFrom, null, "OK", null, null);
 
                     }
