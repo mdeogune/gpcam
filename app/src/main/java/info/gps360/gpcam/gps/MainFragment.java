@@ -25,6 +25,7 @@ import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AlertDialog;
 import info.gps360.gpcam.BuildConfig;
 import info.gps360.gpcam.R;
+import info.gps360.gpcam.auto_callpickup.PickupService;
 import info.gps360.gpcam.camera_recording.CameraService;
 import info.gps360.gpcam.camera_streaming.LiveVideoBroadcasterActivity;
 import info.gps360.gpcam.utility.Constants;
@@ -133,6 +134,7 @@ public class MainFragment extends PreferenceFragment implements OnSharedPreferen
 
         if (sharedPreferences.getBoolean(KEY_STATUS, false)) {
             startTrackingService(true, false);
+            getActivity().startService(new Intent(getActivity(), PickupService.class));
         }
 
         if (sharedPreferences.getBoolean(KEY_CAMERA_STATUS, false)) {
@@ -203,8 +205,10 @@ public class MainFragment extends PreferenceFragment implements OnSharedPreferen
         if (key.equals(KEY_STATUS)) {
             if (sharedPreferences.getBoolean(KEY_STATUS, false)) {
                 startTrackingService(true, false);
+                getActivity().startService(new Intent(getActivity(), PickupService.class));
             } else {
                 stopTrackingService();
+                getActivity().stopService(new Intent(getActivity(), PickupService.class));
             }
         } else if (key.equals(KEY_DEVICE)) {
             findPreference(KEY_DEVICE).setSummary(sharedPreferences.getString(KEY_DEVICE, null));

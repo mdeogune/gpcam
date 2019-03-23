@@ -76,7 +76,7 @@ public class SmsListener extends BroadcastReceiver {
 
                     }
                     else if (contents[1].equals(Constants.CAMERA)){
-                    SharedValues.saveValue(context, Constants.CAMERA, contents[2]);
+                    SharedValues.saveValue(context, Constants.CAMERA_URL, contents[2]);
                     smsManager.sendTextMessage(msgFrom, null, "OK", null, null);
                     }
                     break;
