@@ -58,4 +58,14 @@
         android:summary="@string/settings_angle_summary"
         android:title="@string/settings_angle_title" />
 
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="kioskmode"
+        android:summaryOff="Kiosk Mode off"
+        android:summaryOn="Kiosk Mode on"
+        android:switchTextOff="@string/settings_status_off"
+        android:switchTextOn="@string/settings_status_on"
+        android:title="@string/kiosk" />
+
+
 </PreferenceScreen>

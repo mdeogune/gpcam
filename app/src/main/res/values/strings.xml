@@ -16,6 +16,7 @@
   <string name="settings_angle_title">Angle</string>
   <string name="settings_angle_summary">Reporting angle in degrees</string>
   <string name="settings_status_title">Service status</string>
+  <string name="kiosk">Kiosk Mode</string>
   <string name="settings_status_off">Start</string>
   <string name="settings_status_on">Stop</string>
   <string name="settings_status_off_summary">Service stopped</string>

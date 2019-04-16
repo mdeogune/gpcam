@@ -1,5 +1,6 @@
 package info.gps360.gpcam.auto_callpickup;
 
+import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressLint("OverrideAbstract")
 public class PickupService extends NotificationListenerService {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
